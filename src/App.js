@@ -1,20 +1,42 @@
 import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import styled from'styled-components';
 
+import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+
+import { database, auth } from './firebase-config';
 import { Login } from './components/Login';
+import { NavBar } from './components/NavBar';
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
 
 const App = () => {
-  const [ user, setUser ] = useState( false );
+  const [ user ] = useAuthState( auth );
 
-  if( user === false ) {
+  const signIn = async () => {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup( auth, provider );
+  };
+
+  const signOutUser = () => {
+    signOut( auth );
+  };
+
+  if( user ) {
     return (
-      <Login/>
+      <NavBar signOutUser={ signOutUser }/>
     )
   }
 
   return (
-    <div>
-      Hello World
-    </div>
+    <Wrapper>
+      <Login signIn={ signIn } />
+    </Wrapper>
   );
 };
 

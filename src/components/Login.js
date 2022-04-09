@@ -44,16 +44,18 @@ const Button = styled.button`
     }
 `;
 
-const Login = () => {
+const Login = ( props ) => {
   const logo = {
     name: 'LOGO OF APP',
     icon: appIcon,
   };
 
+  const { signIn } = props;
+
   return (
     <Wrapper>
       <Image src={ logo.icon } alt={ logo.name } />
-      <Button>SIGN-IN WITH GOOGLE</Button>
+      <Button onClick={ signIn } >SIGN-IN WITH GOOGLE</Button>
     </Wrapper>
   );
 };
