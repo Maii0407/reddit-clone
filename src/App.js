@@ -8,7 +8,7 @@ import { database, auth } from './firebase-config';
 import { Login } from './components/Login';
 import { NavBar } from './components/NavBar';
 
-const Wrapper = styled.div`
+const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -29,14 +29,16 @@ const App = () => {
 
   if( user ) {
     return (
-      <NavBar signOutUser={ signOutUser }/>
+      <Container>
+        <NavBar signOutUser={ signOutUser } user={ user } />
+      </Container>
     )
   }
 
   return (
-    <Wrapper>
+    <Container>
       <Login signIn={ signIn } />
-    </Wrapper>
+    </Container>
   );
 };
 

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import appIcon from '/home/akmal-izuddin/Desktop/the-odin-project/reddit-clone/src/assets/smileyLogo.webp';
 
-const Wrapper = styled.div`
+const Container = styled.div`
   width: 50%;
   height: 50%;
   background-color: #1b1b1b;
@@ -53,10 +53,10 @@ const Login = ( props ) => {
   const { signIn } = props;
 
   return (
-    <Wrapper>
+    <Container>
       <Image src={ logo.icon } alt={ logo.name } />
-      <Button onClick={ signIn } >SIGN-IN WITH GOOGLE</Button>
-    </Wrapper>
+      <Button onClick={ signIn } >LOG IN WITH GOOGLE</Button>
+    </Container>
   );
 };
 
