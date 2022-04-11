@@ -7,6 +7,7 @@ import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { database, auth } from './firebase-config';
 import { Login } from './components/Login';
 import { NavBar } from './components/NavBar';
+import { MainContent } from './components/MainContent';
 
 const Container = styled.div`
   width: 100%;
@@ -31,6 +32,7 @@ const App = () => {
     return (
       <Container>
         <NavBar signOutUser={ signOutUser } user={ user } />
+        <MainContent user={ user } />
       </Container>
     )
   }
