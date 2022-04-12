@@ -6,7 +6,7 @@ import appIcon from '/home/akmal-izuddin/Desktop/the-odin-project/reddit-clone/s
 import expandArrow from '/home/akmal-izuddin/Desktop/the-odin-project/reddit-clone/src/assets/outline_expand_more_white_24dp.png';
 
 const NavBar = ( props ) => {
-  const { signOutUser, user } = props;
+  const { signOutUser, user, getPosts } = props;
   const logo = { name: 'LOGO OF APP', icon: appIcon };
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ const NavBar = ( props ) => {
 
   return (
     <Container>
-      <LogoContainer onClick={ () => { navigate( '/' ) } } >
+      <LogoContainer onClick={ getPosts } >
         <Logo src={ logo.icon } alt={ logo.name }/>
         <Header>readTHAT</Header>
       </LogoContainer>
@@ -88,11 +88,17 @@ const Header = styled.h1`
 const SearchBar = styled.input`
   width: 50%;
   height: 35px;
+  background-color: transparent;
+  color: silver;
   margin-left: 50px;
   margin-right: 50px;
   border: 1px solid silver;
   border-radius: 5px;
-  cursor: pointer;
+  text-indent: 20px;
+  &:hover {
+    border: 1px solid white;
+    background-color: black;
+  }
 `;
 
 const ProfileContainer = styled.div`

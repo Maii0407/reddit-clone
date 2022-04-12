@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-const CreatePost = () => {
+const CreatePost = ( props ) => {
+  const { addPost } = props;
+
+  const [ title, setTitle ] = useState('');
+  const [ content, setContent ] = useState('');
+
   const navigate = useNavigate();
+
+  const handleTitleChange = (e) => {
+    setTitle( e.target.value );
+  }
+
+  const handleContentChange = (e) => {
+    setContent( e.target.value );
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if( title === '' && content === '' ) {
+      navigate( '/' );
+    }
+
+    addPost( title, content );
+
+    setTitle('');
+    setContent('');
     navigate( '/' );
   };
 
@@ -15,8 +36,8 @@ const CreatePost = () => {
     <MainContainer>
       <Header>Create a post</Header>
       <FormContainer onSubmit={ handleSubmit }>
-        <TitleInput type='text' placeholder='Title' />
-        <TextInput type='text' placeholder='Text ( optional )'/>
+        <TitleInput type='text' placeholder='Title' value={ title } onChange={ handleTitleChange }/>
+        <TextInput type='text' placeholder='Text ( optional )' value={ content } onChange={ handleContentChange } />
         <PostButton>POST</PostButton>
       </FormContainer>
     </MainContainer>
@@ -24,7 +45,7 @@ const CreatePost = () => {
 };
 
 const MainContainer = styled.div`
-  width: 50%;
+  width: 100%;
   height: 50%;
   display: flex;
   flex-direction: column;
