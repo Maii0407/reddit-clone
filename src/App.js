@@ -17,6 +17,7 @@ const App = () => {
   const signIn = async () => {
     const provider = new GoogleAuthProvider();
     await signInWithPopup( auth, provider );
+    getPosts();
   };
 
   const signOutUser = () => {
@@ -31,7 +32,7 @@ const App = () => {
         title: contentTitle,
         content: mainContent,
         comments: [],
-        date: new Date(),
+        date: new Date().toUTCString(),
         voteCount: 0,
       });
     } catch( error ) {
@@ -58,13 +59,14 @@ const App = () => {
     });
 
     console.log( newArray );
+    setPostsArray( newArray );
   };
 
   if( user ) {
     return (
       <Container>
-        <NavBar signOutUser={ signOutUser } user={ user } getPosts={ getPosts } />
-        <MainContent user={ user } addPost={ addPost } />
+        <NavBar signOutUser={ signOutUser } user={ user } />
+        <MainContent user={ user } addPost={ addPost } getPosts={ getPosts } postsArray={ postsArray } />
       </Container>
     )
   }

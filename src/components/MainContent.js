@@ -2,18 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import { Routes, Route } from 'react-router-dom';
 
-import { PostNav } from './PostNavBar';
 import { CreatePost } from './CreatePost';
 import { InitialContent } from './InitialContent';
 
 const MainContent = ( props ) => {
-  const { user, addPost } = props;
+  const { user, addPost, postsArray, getPosts } = props;
   return (
     <MainContainer>
       <ContenContainer>
         <Routes>
-          <Route path='/' element={ <InitialContent user={ user }/> } />
-          <Route path='/submit' element={ <CreatePost addPost={ addPost } /> } />
+          <Route path='/' element={ <InitialContent user={ user } postsArray={ postsArray } /> } />
+          <Route path='/submit' element={ <CreatePost addPost={ addPost } getPosts={ getPosts } /> } />
         </Routes>
       </ContenContainer>
       <InfoContainer/>

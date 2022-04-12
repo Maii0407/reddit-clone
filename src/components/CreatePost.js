@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 const CreatePost = ( props ) => {
-  const { addPost } = props;
+  const { addPost, getPosts } = props;
 
   const [ title, setTitle ] = useState('');
   const [ content, setContent ] = useState('');
@@ -29,6 +29,7 @@ const CreatePost = ( props ) => {
 
     setTitle('');
     setContent('');
+    getPosts();
     navigate( '/' );
   };
 

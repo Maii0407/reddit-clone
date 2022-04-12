@@ -2,6 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { PostNav } from './PostNavBar';
+import { Post } from './Post';
+
+const InitialContent = ( props ) => {
+  const { user, postsArray } = props;
+
+  return (
+    <MainContainer>
+      <PostNav user={ user } />
+      <PostContainer>
+        { postsArray.map(( doc ) => {
+          return <Post key={ doc.id } doc={ doc }/>
+        }) }
+      </PostContainer>
+    </MainContainer>
+  );
+};
 
 const MainContainer = styled.div`
   width: 100%;
@@ -15,17 +31,7 @@ const PostContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
 `;
-
-const InitialContent = ( props ) => {
-  const { user } = props;
-
-  return (
-    <MainContainer>
-      <PostNav user={ user } />
-      <PostContainer/>
-    </MainContainer>
-  );
-};
 
 export { InitialContent };

@@ -58,6 +58,7 @@ const PlusBtn = styled.button`
   border: 1px solid transparent;
   border-radius: 5px;
   font-size: 20px;
+  font-weight: bold;
   cursor: pointer;
   &:hover {
     background-color: rgba( 0, 0, 0, 0.4 );
