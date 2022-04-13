@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import { CreatePost } from './CreatePost';
 import { InitialContent } from './InitialContent';
+import { FullPost } from './FullPost';
 
 const MainContent = ( props ) => {
   const { user, addPost, postsArray, getPosts } = props;
@@ -13,6 +14,9 @@ const MainContent = ( props ) => {
         <Routes>
           <Route path='/' element={ <InitialContent user={ user } postsArray={ postsArray } /> } />
           <Route path='/submit' element={ <CreatePost addPost={ addPost } getPosts={ getPosts } /> } />
+          { postsArray.map((doc) => {
+            return <Route key={ doc.id } path={ `/comments/${ doc.id }` }  element={ <FullPost doc={ doc } user={ user } /> }/>
+          }) }
         </Routes>
       </ContenContainer>
       <InfoContainer/>

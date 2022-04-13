@@ -92,9 +92,10 @@ const TextInput = styled.textarea`
   border-radius: 5px;
   background-color: #1b1b1b;
   color: silver;
-  text-indent: 15px;
+  padding: 20px;
   align-self: center;
   margin-bottom: 20px;
+  resize: vertical;
 `;
 
 const PostButton = styled.button`

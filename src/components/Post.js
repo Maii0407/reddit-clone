@@ -1,5 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+
+const Post = ( props ) => {
+  const navigate = useNavigate();
+  const { doc } = props;
+
+  return (
+    <Container onClick={ () => { navigate( `/comments/${ doc.id }` ) } }>
+      <CountContainer>
+        <VoteBtn>+</VoteBtn>
+        <VoteCount>{ doc.voteCount }</VoteCount>
+        <VoteBtn>-</VoteBtn>
+      </CountContainer>
+      <ContentContainer>
+        <MiscPara>{ `r/readthat Posted by u/${ doc.username } ${ doc.date }` }</MiscPara>
+        <TitleHead>{ doc.title }</TitleHead>
+        <PostContent>{ doc.content }</PostContent>
+        <Comment onClick={ () => { navigate( `/comments/${ doc.id }` ) } }>{ `${ doc.comments.length } Comments` }</Comment>
+      </ContentContainer>
+    </Container>
+  )
+};
 
 const Container = styled.div`
   width: 100%;
@@ -65,7 +87,6 @@ const TitleHead = styled.h1`
 `;
 
 const PostContent = styled.p`
-  width: 90%;
   height: 100%;
   background-color: rgba( 1, 1, 1, 1 );
   padding: 20px;
@@ -85,23 +106,5 @@ const Comment = styled.div`
     outline: 1px solid silver;
   }
 `;
-
-const Post = ( props ) => {
-  return (
-    <Container>
-      <CountContainer>
-        <VoteBtn>+</VoteBtn>
-        <VoteCount>{ props.doc.voteCount }</VoteCount>
-        <VoteBtn>-</VoteBtn>
-      </CountContainer>
-      <ContentContainer>
-        <MiscPara>{ `r/readthat Posted by u/${ props.doc.username } ${ props.doc.date }` }</MiscPara>
-        <TitleHead>{ props.doc.title }</TitleHead>
-        <PostContent>{ props.doc.content }</PostContent>
-        <Comment>{ `${ props.doc.comments.length } Comments` }</Comment>
-      </ContentContainer>
-    </Container>
-  )
-};
 
 export { Post };
