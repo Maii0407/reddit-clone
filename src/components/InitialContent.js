@@ -5,14 +5,14 @@ import { PostNav } from './PostNavBar';
 import { Post } from './Post';
 
 const InitialContent = ( props ) => {
-  const { user, postsArray } = props;
+  const { user, postsArray, addVote, minusVote } = props;
 
   return (
     <MainContainer>
       <PostNav user={ user } />
       <PostContainer>
         { postsArray.map(( doc ) => {
-          return <Post key={ doc.id } doc={ doc }/>
+          return <Post key={ doc.id } doc={ doc } addVote={ addVote } minusVote={ minusVote } />
         }) }
       </PostContainer>
     </MainContainer>

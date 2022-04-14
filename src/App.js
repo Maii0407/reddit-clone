@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { collection, addDoc, doc, setDoc, getDocs } from 'firebase/firestore';
 import styled from'styled-components';
@@ -40,6 +40,61 @@ const App = () => {
     }
   };
 
+  const addComment = async ( commentContent, data ) => {
+    const commentObject = {
+      username: user.displayName,
+      date: new Date().toUTCString(),
+      content: commentContent,
+      voteCount: 0,
+    };
+
+    try {
+      await setDoc( doc( database, 'posts', `${ data.id }` ), {
+        email: data.email,
+        username: data.username,
+        title: data.title,
+        content: data.content,
+        comments: [ ...data.comments, commentObject ],
+        date: data.date,
+        voteCount: data.voteCount,
+      })
+    } catch( error )   {
+      console.log( `error in creating comment` )
+    }
+  };
+
+  const upVote = async ( data ) => {
+    try {
+      await setDoc( doc( database, 'posts', `${ data.id }` ), {
+        email: data.email,
+        username: data.username,
+        title: data.title,
+        content: data.content,
+        comments: data.comments,
+        date: data.date,
+        voteCount: ( data.voteCount + 1 ),
+      })
+    } catch( error ) {
+      console.error( 'error in upvoting post or comment' );
+    }
+  };
+
+  const downVote = async ( data ) => {
+    try {
+      await setDoc( doc( database, 'posts', `${ data.id }` ), {
+        email: data.email,
+        username: data.username,
+        title: data.title,
+        content: data.content,
+        comments: data.comments,
+        date: data.date,
+        voteCount: ( data.voteCount - 1 ),
+      })
+    } catch( error ) {
+      console.error( 'error in upvoting post or comment' );
+    }
+  };
+
   const getPosts = async () => {
     const newArray = [];
     const querySnapshot = await getDocs( collection( database, 'posts'));
@@ -58,15 +113,26 @@ const App = () => {
       newArray.push( obj );
     });
 
-    console.log( newArray );
     setPostsArray( newArray );
   };
+
+  useEffect(() => {
+    getPosts();
+  });
 
   if( user ) {
     return (
       <Container>
         <NavBar signOutUser={ signOutUser } user={ user } />
-        <MainContent user={ user } addPost={ addPost } getPosts={ getPosts } postsArray={ postsArray } />
+        <MainContent
+        user={ user }
+        addPost={ addPost }
+        getPosts={ getPosts }
+        postsArray={ postsArray }
+        upVote={ upVote }
+        downVote={ downVote }
+        addComment={ addComment }
+        />
       </Container>
     )
   }

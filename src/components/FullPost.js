@@ -1,28 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { Comment } from './Comment';
+
+const CommentContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+`;
+
 const FullPost = ( props ) => {
-  const { doc, user } = props;
+  const { doc, user, addVote, minusVote, addComment } = props;
+
+  const [ commentInput, setCommentInput ] = useState('');
+
+  const handleChange = (e) => {
+    setCommentInput( e.target.value );
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    addComment( commentInput, doc );
+    setCommentInput('');
+  };
+
   return (
     <MainContainer>
       <PostContainer>
         <CountContainer>
-          <VoteBtn>+</VoteBtn>
+          <VoteBtn onClick={ () => { addVote( doc ) } }>+</VoteBtn>
           <VoteCount>{ doc.voteCount }</VoteCount>
-          <VoteBtn>-</VoteBtn>
+          <VoteBtn onClick={ () => { minusVote( doc ) } } >-</VoteBtn>
         </CountContainer>
         <ContentContainer>
           <MiscPara>{ `r/readthat Posted by u/${ doc.username } ${ doc.date }` }</MiscPara>
           <TitleHead>{ doc.title }</TitleHead>
           <PostContent>{ doc.content }</PostContent>
-          <Comment>{ `${ doc.comments.length } Comments` }</Comment>
+          <CommentCount>{ `${ doc.comments.length } Comments` }</CommentCount>
         </ContentContainer>
       </PostContainer>
-      <CommentForm>
+      <CommentForm onSubmit={ handleSubmit } >
         <CommentPara>{ `Comment as ${ user.displayName }` }</CommentPara>
-        <AddComment type='text' placeholder='What are your thoughts?' />
+        <AddComment type='text' placeholder='What are your thoughts?' value={ commentInput } onChange={ handleChange } />
         <CommentBtn>Comment</CommentBtn>
       </CommentForm>
+      <CommentContainer>
+        { doc.comments.map((data) => {
+          return <Comment key={ doc.comments.indexOf( data ) } data={ data } />
+        }) }
+      </CommentContainer>
     </MainContainer>
   );
 };
@@ -99,7 +128,7 @@ const PostContent = styled.p`
   border-radius: 5px;
 `;
 
-const Comment = styled.button`
+const CommentCount = styled.button`
   width: 20%;
   height: 30px;
   display: flex;

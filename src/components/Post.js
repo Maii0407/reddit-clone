@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router-dom';
 
 const Post = ( props ) => {
   const navigate = useNavigate();
-  const { doc } = props;
+  const { doc, addVote, minusVote } = props;
 
   return (
-    <Container onClick={ () => { navigate( `/comments/${ doc.id }` ) } }>
+    <Container>
       <CountContainer>
-        <VoteBtn>+</VoteBtn>
+        <VoteBtn onClick={ () => { addVote( doc ) } }>+</VoteBtn>
         <VoteCount>{ doc.voteCount }</VoteCount>
-        <VoteBtn>-</VoteBtn>
+        <VoteBtn onClick={ () => { minusVote( doc ) } } >-</VoteBtn>
       </CountContainer>
       <ContentContainer>
         <MiscPara>{ `r/readthat Posted by u/${ doc.username } ${ doc.date }` }</MiscPara>
@@ -88,7 +88,8 @@ const TitleHead = styled.h1`
 
 const PostContent = styled.p`
   height: 100%;
-  background-color: rgba( 1, 1, 1, 1 );
+  background-color: gray;
+  color: white;
   padding: 20px;
   border-radius: 5px;
 `;
