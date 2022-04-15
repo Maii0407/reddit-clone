@@ -7,7 +7,15 @@ import { InitialContent } from './InitialContent';
 import { FullPost } from './FullPost';
 
 const MainContent = ( props ) => {
-  const { user, addPost, postsArray, getPosts, upVote, downVote, addComment } = props;
+  const { user,
+    addPost,
+    postsArray,
+    getPosts,
+    getComments,
+    upVote,
+    downVote,
+    addComment,
+    commentsArray } = props;
 
   const addVote = ( data ) => {
     upVote( data );
@@ -23,10 +31,22 @@ const MainContent = ( props ) => {
     <MainContainer>
       <ContenContainer>
         <Routes>
-          <Route path='/' element={ <InitialContent user={ user } postsArray={ postsArray } addVote={ addVote } minusVote={ minusVote } /> } />
+          <Route path='/' element={ <InitialContent
+          user={ user }
+          postsArray={ postsArray }
+          addVote={ addVote }
+          minusVote={ minusVote }
+          commentsArray={ commentsArray }/> } />
           <Route path='/submit' element={ <CreatePost addPost={ addPost } getPosts={ getPosts } /> } />
           { postsArray.map((doc) => {
-            return <Route key={ doc.id } path={ `/comments/${ doc.id }` }  element={ <FullPost doc={ doc } user={ user } addVote={ addVote } minusVote={ minusVote } addComment={ addComment } /> }/>
+            return <Route key={ doc.id } path={ `/comments/${ doc.id }` }  element={ <FullPost
+              doc={ doc }
+              user={ user }
+              addVote={ addVote }
+              minusVote={ minusVote }
+              addComment={ addComment }
+              commentsArray={ commentsArray }
+              getComments={ getComments }/> }/>
           }) }
         </Routes>
       </ContenContainer>

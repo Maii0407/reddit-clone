@@ -13,6 +13,7 @@ import { MainContent } from './components/MainContent';
 const App = () => {
   const [ user ] = useAuthState( auth );
   const [ postsArray, setPostsArray ] = useState([]);
+  const [ commentsArray, setCommentsArray ] = useState([]);
 
   const signIn = async () => {
     const provider = new GoogleAuthProvider();
@@ -31,7 +32,6 @@ const App = () => {
         username: user.displayName,
         title: contentTitle,
         content: mainContent,
-        comments: [],
         date: new Date().toUTCString(),
         voteCount: 0,
       });
@@ -41,25 +41,16 @@ const App = () => {
   };
 
   const addComment = async ( commentContent, data ) => {
-    const commentObject = {
-      username: user.displayName,
-      date: new Date().toUTCString(),
-      content: commentContent,
-      voteCount: 0,
-    };
-
     try {
-      await setDoc( doc( database, 'posts', `${ data.id }` ), {
-        email: data.email,
-        username: data.username,
-        title: data.title,
-        content: data.content,
-        comments: [ ...data.comments, commentObject ],
-        date: data.date,
-        voteCount: data.voteCount,
+      await addDoc( collection( database, 'comments' ), {
+        username: user.displayName,
+        date: new Date().toUTCString(),
+        content: commentContent,
+        voteCount: 0,
+        postID: data.id
       })
-    } catch( error )   {
-      console.log( `error in creating comment` )
+    } catch( error ) {
+      console.log( 'error in adding comment' );
     }
   };
 
@@ -70,7 +61,6 @@ const App = () => {
         username: data.username,
         title: data.title,
         content: data.content,
-        comments: data.comments,
         date: data.date,
         voteCount: ( data.voteCount + 1 ),
       })
@@ -86,7 +76,6 @@ const App = () => {
         username: data.username,
         title: data.title,
         content: data.content,
-        comments: data.comments,
         date: data.date,
         voteCount: ( data.voteCount - 1 ),
       })
@@ -97,6 +86,7 @@ const App = () => {
 
   const getPosts = async () => {
     const newArray = [];
+
     const querySnapshot = await getDocs( collection( database, 'posts'));
     querySnapshot.forEach(( doc ) => {
       const obj = {
@@ -104,7 +94,6 @@ const App = () => {
         username: doc.data().username,
         date: doc.data().date,
         id: doc.id,
-        comments: doc.data().comments,
         title: doc.data().title,
         content: doc.data().content,
         voteCount: doc.data().voteCount,
@@ -116,8 +105,29 @@ const App = () => {
     setPostsArray( newArray );
   };
 
+  const getComments = async () => {
+    const newArray = [];
+
+    const querySnapshot = await getDocs( collection( database, 'comments' ));
+    querySnapshot.forEach(( data ) => {
+      const obj = {
+        username: data.data().username,
+        date: data.data().date,
+        content: data.data().content,
+        voteCount: data.data().voteCount,
+        postID: data.data().postID,
+        id: data.id,
+      }
+
+      newArray.push( obj );
+    });
+
+    setCommentsArray( newArray );
+  };
+
   useEffect(() => {
     getPosts();
+    getComments();
   });
 
   if( user ) {
@@ -128,10 +138,12 @@ const App = () => {
         user={ user }
         addPost={ addPost }
         getPosts={ getPosts }
+        getComments={ getComments }
         postsArray={ postsArray }
         upVote={ upVote }
         downVote={ downVote }
         addComment={ addComment }
+        commentsArray={ commentsArray }
         />
       </Container>
     )

@@ -3,18 +3,12 @@ import styled from 'styled-components';
 
 import { Comment } from './Comment';
 
-const CommentContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-`;
-
 const FullPost = ( props ) => {
-  const { doc, user, addVote, minusVote, addComment } = props;
+  const { doc, user, addVote, minusVote, addComment, commentsArray, getComments } = props;
 
   const [ commentInput, setCommentInput ] = useState('');
+
+  let commentArray = commentsArray.filter( comment => comment.postID === doc.id );
 
   const handleChange = (e) => {
     setCommentInput( e.target.value );
@@ -25,6 +19,7 @@ const FullPost = ( props ) => {
 
     addComment( commentInput, doc );
     setCommentInput('');
+    getComments();
   };
 
   return (
@@ -39,7 +34,7 @@ const FullPost = ( props ) => {
           <MiscPara>{ `r/readthat Posted by u/${ doc.username } ${ doc.date }` }</MiscPara>
           <TitleHead>{ doc.title }</TitleHead>
           <PostContent>{ doc.content }</PostContent>
-          <CommentCount>{ `${ doc.comments.length } Comments` }</CommentCount>
+          <CommentCount>{ `${ commentArray.length } Comments` }</CommentCount>
         </ContentContainer>
       </PostContainer>
       <CommentForm onSubmit={ handleSubmit } >
@@ -48,8 +43,8 @@ const FullPost = ( props ) => {
         <CommentBtn>Comment</CommentBtn>
       </CommentForm>
       <CommentContainer>
-        { doc.comments.map((data) => {
-          return <Comment key={ doc.comments.indexOf( data ) } data={ data } />
+        { commentArray.map((data) => {
+          return <Comment key={ data.id } data={ data } />
         }) }
       </CommentContainer>
     </MainContainer>
@@ -182,6 +177,14 @@ const CommentBtn = styled.button`
   &:hover {
     background-color: gray;
   }
+`;
+
+const CommentContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 `;
 
 export { FullPost };

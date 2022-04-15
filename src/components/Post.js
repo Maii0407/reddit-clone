@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 const Post = ( props ) => {
   const navigate = useNavigate();
-  const { doc, addVote, minusVote } = props;
+
+  const { doc, addVote, minusVote, commentsArray } = props;
+
+  let commentArray = commentsArray.filter( comment => comment.postID === doc.id );
 
   return (
     <Container>
@@ -17,7 +20,7 @@ const Post = ( props ) => {
         <MiscPara>{ `r/readthat Posted by u/${ doc.username } ${ doc.date }` }</MiscPara>
         <TitleHead>{ doc.title }</TitleHead>
         <PostContent>{ doc.content }</PostContent>
-        <Comment onClick={ () => { navigate( `/comments/${ doc.id }` ) } }>{ `${ doc.comments.length } Comments` }</Comment>
+        <Comment onClick={ () => { navigate( `/comments/${ doc.id }` ) } }>{ `${ commentArray.length } Comments` }</Comment>
       </ContentContainer>
     </Container>
   )
