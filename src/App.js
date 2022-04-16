@@ -126,9 +126,11 @@ const App = () => {
   };
 
   useEffect(() => {
-    getPosts();
-    getComments();
-  });
+    if( postsArray.length === 0 && commentsArray.length === 0  ) {
+      getPosts();
+      getComments();
+    }
+  }, [  postsArray, commentsArray]);
 
   if( user ) {
     return (
