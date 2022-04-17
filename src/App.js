@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { collection, addDoc, doc, setDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
 import styled from'styled-components';
 
 import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
@@ -51,36 +51,6 @@ const App = () => {
       })
     } catch( error ) {
       console.log( 'error in adding comment' );
-    }
-  };
-
-  const upVote = async ( data ) => {
-    try {
-      await setDoc( doc( database, 'posts', `${ data.id }` ), {
-        email: data.email,
-        username: data.username,
-        title: data.title,
-        content: data.content,
-        date: data.date,
-        voteCount: ( data.voteCount + 1 ),
-      })
-    } catch( error ) {
-      console.error( 'error in upvoting post or comment' );
-    }
-  };
-
-  const downVote = async ( data ) => {
-    try {
-      await setDoc( doc( database, 'posts', `${ data.id }` ), {
-        email: data.email,
-        username: data.username,
-        title: data.title,
-        content: data.content,
-        date: data.date,
-        voteCount: ( data.voteCount - 1 ),
-      })
-    } catch( error ) {
-      console.error( 'error in upvoting post or comment' );
     }
   };
 
@@ -142,8 +112,6 @@ const App = () => {
         getPosts={ getPosts }
         getComments={ getComments }
         postsArray={ postsArray }
-        upVote={ upVote }
-        downVote={ downVote }
         addComment={ addComment }
         commentsArray={ commentsArray }
         />

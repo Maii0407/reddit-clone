@@ -46,16 +46,16 @@ const VoteCount = styled.div`
 
 
 const Comment = ( props ) => {
-  const { data } = props;
+  const { data, commentUpvote, commentDownvote } = props;
 
   return (
     <Container>
       <InfoPara>{ `${data.username} ${ data.date }` }</InfoPara>
       <ContentPara>{ data.content }</ContentPara>
       <VoteContainer>
-        <VoteBtn>+</VoteBtn>
+        <VoteBtn onClick={ () => { commentUpvote( data ) } }>+</VoteBtn>
         <VoteCount>{ data.voteCount }</VoteCount>
-        <VoteBtn>-</VoteBtn>
+        <VoteBtn onClick={ () => { commentDownvote( data ) } }>-</VoteBtn>
       </VoteContainer>
     </Container>
   );

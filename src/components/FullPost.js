@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { setDoc, doc } from 'firebase/firestore';
+
+import { database } from '/home/akmal-izuddin/Desktop/the-odin-project/reddit-clone/src/firebase-config';
 
 import { Comment } from './Comment';
 
 const FullPost = ( props ) => {
-  const { doc, user, addVote, minusVote, addComment, commentsArray, getComments } = props;
+  const { data, user, postUpvote, postDownvote, addComment, commentsArray, getComments } = props;
 
   const [ commentInput, setCommentInput ] = useState('');
 
-  let commentArray = commentsArray.filter( comment => comment.postID === doc.id );
+  let commentArray = commentsArray.filter( comment => comment.postID === data.id );
 
   const handleChange = (e) => {
     setCommentInput( e.target.value );
@@ -22,18 +25,50 @@ const FullPost = ( props ) => {
     getComments();
   };
 
+  const commentUpvote = async ( object ) => {
+    try {
+      await setDoc( doc( database, 'comments', `${ object.id }` ), {
+        username: object.username,
+        date: object.date,
+        content: object.content,
+        voteCount: ( object.voteCount + 1 ),
+        postID: object.postID
+      })
+    } catch( error ) {
+      console.error( 'error in upvoting comment' );
+    }
+
+    getComments();
+  };
+
+  const commentDownvote = async ( object ) => {
+    try {
+      await setDoc( doc( database, 'comments', `${ object.id }` ), {
+        username: object.username,
+        date: object.date,
+        content: object.content,
+        voteCount: ( object.voteCount - 1 ),
+        postID: object.postID
+      })
+    } catch( error ) {
+      console.error( 'error in downvoting comment' );
+    }
+
+    getComments();
+  };
+
   return (
     <MainContainer>
       <PostContainer>
         <CountContainer>
-          <VoteBtn onClick={ () => { addVote( doc ) } }>+</VoteBtn>
-          <VoteCount>{ doc.voteCount }</VoteCount>
-          <VoteBtn onClick={ () => { minusVote( doc ) } } >-</VoteBtn>
+          <VoteBtn onClick={ () => { postUpvote( data ) } }>+</VoteBtn>
+          <VoteCount>{ data.voteCount }</VoteCount>
+          <VoteBtn onClick={ () => { postDownvote( data ) } } >-</VoteBtn>
         </CountContainer>
         <ContentContainer>
-          <MiscPara>{ `r/readthat Posted by u/${ doc.username } ${ doc.date }` }</MiscPara>
-          <TitleHead>{ doc.title }</TitleHead>
-          <PostContent>{ doc.content }</PostContent>
+          <MiscPara>{ `r/readthat Posted by u/${ data.username } ${ data.date }` }</MiscPara>
+          <TitleHead>{ data.title }</TitleHead>
+          <PostContent>{ data.content }</PostContent>
           <CommentCount>{ `${ commentArray.length } Comments` }</CommentCount>
         </ContentContainer>
       </PostContainer>
@@ -44,7 +79,10 @@ const FullPost = ( props ) => {
       </CommentForm>
       <CommentContainer>
         { commentArray.map((data) => {
-          return <Comment key={ data.id } data={ data } />
+          return <Comment key={ data.id }
+          data={ data }
+          commentUpvote={ commentUpvote }
+          commentDownvote={ commentDownvote } />
         }) }
       </CommentContainer>
     </MainContainer>

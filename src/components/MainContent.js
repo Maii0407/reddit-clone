@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Routes, Route } from 'react-router-dom';
+import { setDoc, doc } from 'firebase/firestore';
+
+import { database } from '/home/akmal-izuddin/Desktop/the-odin-project/reddit-clone/src/firebase-config';
 
 import { CreatePost } from './CreatePost';
 import { InitialContent } from './InitialContent';
@@ -12,20 +15,42 @@ const MainContent = ( props ) => {
     postsArray,
     getPosts,
     getComments,
-    upVote,
-    downVote,
     addComment,
     commentsArray } = props;
 
-  const addVote = ( data ) => {
-    upVote( data );
-    getPosts();
-  };
+    const postUpvote = async ( data ) => {
+      try {
+        await setDoc( doc( database, 'posts', `${ data.id }` ), {
+          email: data.email,
+          username: data.username,
+          title: data.title,
+          content: data.content,
+          date: data.date,
+          voteCount: ( data.voteCount + 1 ),
+        })
+      } catch( error ) {
+        console.error( 'error in upvoting post' );
+      }
 
-  const minusVote = ( data ) => {
-    downVote( data );
-    getPosts();
-  };
+      getPosts();
+    };
+  
+    const postDownvote = async ( data ) => {
+      try {
+        await setDoc( doc( database, 'posts', `${ data.id }` ), {
+          email: data.email,
+          username: data.username,
+          title: data.title,
+          content: data.content,
+          date: data.date,
+          voteCount: ( data.voteCount - 1 ),
+        })
+      } catch( error ) {
+        console.error( 'error in downvoting post' );
+      }
+
+      getPosts();
+    };
 
   return (
     <MainContainer>
@@ -34,16 +59,16 @@ const MainContent = ( props ) => {
           <Route path='/' element={ <InitialContent
           user={ user }
           postsArray={ postsArray }
-          addVote={ addVote }
-          minusVote={ minusVote }
+          postUpvote={ postUpvote }
+          postDownvote={ postDownvote }
           commentsArray={ commentsArray }/> } />
           <Route path='/submit' element={ <CreatePost addPost={ addPost } getPosts={ getPosts } /> } />
-          { postsArray.map((doc) => {
-            return <Route key={ doc.id } path={ `/comments/${ doc.id }` }  element={ <FullPost
-              doc={ doc }
+          { postsArray.map(( data ) => {
+            return <Route key={ data.id } path={ `/comments/${ data.id }` }  element={ <FullPost
+              data={ data }
               user={ user }
-              addVote={ addVote }
-              minusVote={ minusVote }
+              postUpvote={ postUpvote }
+              postDownvote={ postDownvote }
               addComment={ addComment }
               commentsArray={ commentsArray }
               getComments={ getComments }/> }/>

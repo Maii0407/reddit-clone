@@ -5,16 +5,16 @@ import { useNavigate } from 'react-router-dom';
 const Post = ( props ) => {
   const navigate = useNavigate();
 
-  const { doc, addVote, minusVote, commentsArray } = props;
+  const { doc, postUpvote, postDownvote, commentsArray } = props;
 
   let commentArray = commentsArray.filter( comment => comment.postID === doc.id );
 
   return (
     <Container>
       <CountContainer>
-        <VoteBtn onClick={ () => { addVote( doc ) } }>+</VoteBtn>
+        <VoteBtn onClick={ () => { postUpvote( doc ) } }>+</VoteBtn>
         <VoteCount>{ doc.voteCount }</VoteCount>
-        <VoteBtn onClick={ () => { minusVote( doc ) } } >-</VoteBtn>
+        <VoteBtn onClick={ () => { postDownvote( doc ) } } >-</VoteBtn>
       </CountContainer>
       <ContentContainer>
         <MiscPara>{ `r/readthat Posted by u/${ doc.username } ${ doc.date }` }</MiscPara>
