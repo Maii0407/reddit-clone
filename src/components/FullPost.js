@@ -20,7 +20,7 @@ const FullPost = ( props ) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    addComment( commentInput, doc );
+    addComment( commentInput, data );
     setCommentInput('');
     getComments();
   };

@@ -22,7 +22,7 @@ const CreatePost = ( props ) => {
     e.preventDefault();
 
     if( title === '' && content === '' ) {
-      navigate( '/' );
+      navigate( '/readTHAT' );
     }
 
     addPost( title, content );
@@ -30,7 +30,7 @@ const CreatePost = ( props ) => {
     setTitle('');
     setContent('');
     getPosts();
-    navigate( '/' );
+    navigate( '/readTHAT' );
   };
 
   return (

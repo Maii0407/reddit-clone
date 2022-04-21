@@ -30,14 +30,13 @@ const NavBar = ( props ) => {
 
   return (
     <Container>
-      <LogoContainer onClick={ () => { navigate( '/' ) } } >
+      <LogoContainer onClick={ () => { navigate( '/readTHAT' ) } } >
         <Logo src={ logo.icon } alt={ logo.name }/>
         <Header>readTHAT</Header>
       </LogoContainer>
-      <SearchBar type='text' placeholder='Search Readthat' />
       <Dropdown>
         <ProfileContainer onClick={ showLogOutBtn } >
-          <ProfileImages src={ user.photoURL } alt='PfP' />
+          <ProfileImages src={ logo.icon } alt='PfP' />
           <UserName>{ user.displayName }</UserName>
           <ProfileImages src={ expandArrow } alt='expand arrow' />
         </ProfileContainer>
@@ -83,22 +82,6 @@ const Header = styled.h1`
   font-size: 30px;
   align-item: center;
   margin-left: 5px;
-`;
-
-const SearchBar = styled.input`
-  width: 50%;
-  height: 35px;
-  background-color: transparent;
-  color: silver;
-  margin-left: 50px;
-  margin-right: 50px;
-  border: 1px solid silver;
-  border-radius: 5px;
-  text-indent: 20px;
-  &:hover {
-    border: 1px solid white;
-    background-color: black;
-  }
 `;
 
 const ProfileContainer = styled.div`

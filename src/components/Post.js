@@ -20,7 +20,9 @@ const Post = ( props ) => {
         <MiscPara>{ `r/readthat Posted by u/${ doc.username } ${ doc.date }` }</MiscPara>
         <TitleHead>{ doc.title }</TitleHead>
         <PostContent>{ doc.content }</PostContent>
-        <Comment onClick={ () => { navigate( `/comments/${ doc.id }` ) } }>{ `${ commentArray.length } Comments` }</Comment>
+        <Comment onClick={ () => { navigate( `/readTHAT/comments/${ doc.id }` ) } }>
+          { `${ commentArray.length } Comments` }
+        </Comment>
       </ContentContainer>
     </Container>
   )

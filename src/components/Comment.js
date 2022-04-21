@@ -2,18 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  width: 100%;
+  width: 90%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  border-top: 1px solid silver;
+  align-self: center;
 `;
 
-const InfoPara = styled.p``;
+const InfoPara = styled.p`
+  font-size: 10px;
+`;
 
-const ContentPara = styled.p``;
+const ContentPara = styled.p`
+  margin: 0;
+`;
 
 const VoteContainer = styled.div`
-  width: 100%;
+  width: 20%;
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -40,7 +46,6 @@ cursor: pointer;
 `;
 
 const VoteCount = styled.div`
-  width: 100%;
   text-align: center;
 `;
 

@@ -2,14 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-const PostNav = ( props ) => {
-  const navigate = useNavigate();
+import smileyLogo from '/home/akmal-izuddin/Desktop/the-odin-project/reddit-clone/src/assets/smileyLogo.webp';
 
-  const { user } = props;
+const PostNav = () => {
+  const navigate = useNavigate();
+  const logo = smileyLogo;
+
   return (
     <Container>
-      <ProfilePic src={ user.photoURL } alt='pic' />
-      <TextArea type='text' placeholder='Create Post' onClick={ () => { navigate( '/submit' ) } } />
+      <ProfilePic src={ logo } alt='pic' />
+      <TextArea type='text' placeholder='Create Post' onClick={ () => { navigate( '/readTHAT/submit' ) } } />
       <PlusBtn onClick={ () => { navigate( '/submit' ) } }>+</PlusBtn>
     </Container>
   );

@@ -56,15 +56,15 @@ const MainContent = ( props ) => {
     <MainContainer>
       <ContenContainer>
         <Routes>
-          <Route path='/' element={ <InitialContent
+          <Route path='/readTHAT' element={ <InitialContent
           user={ user }
           postsArray={ postsArray }
           postUpvote={ postUpvote }
           postDownvote={ postDownvote }
           commentsArray={ commentsArray }/> } />
-          <Route path='/submit' element={ <CreatePost addPost={ addPost } getPosts={ getPosts } /> } />
+          <Route path='/readTHAT/submit' element={ <CreatePost addPost={ addPost } getPosts={ getPosts } /> } />
           { postsArray.map(( data ) => {
-            return <Route key={ data.id } path={ `/comments/${ data.id }` }  element={ <FullPost
+            return <Route key={ data.id } path={ `/readTHAT/comments/${ data.id }` }  element={ <FullPost
               data={ data }
               user={ user }
               postUpvote={ postUpvote }
@@ -75,7 +75,15 @@ const MainContent = ( props ) => {
           }) }
         </Routes>
       </ContenContainer>
-      <InfoContainer/>
+      <InfoContainer>
+        <InfoHead>readTHAT</InfoHead>
+        <InfoPara>
+          Welcome to readTHAT! A reddit clone that I build. Play around with the app a bit. This app is build as a project
+          to finish up the Javascript lessons in The Odin Project curriculum. As a learning experience, this app was pretty
+          challenging and also fun to build. The app is build using React as the frontend in addition with styled-components
+          in styling the app and for the backend of the app, I used Firebase.
+        </InfoPara>
+      </InfoContainer>
     </MainContainer>
   );
 };
@@ -98,11 +106,27 @@ const ContenContainer = styled.div`
 
 const InfoContainer = styled.div`
   width: 25%;
-  height: 200px;
+  height: 100%;
   background-color: #1b1b1b;
   border: 1px solid silver;
   border-radius: 5px;
   margin-left: 30px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const InfoHead = styled.h1`
+  font-size: 20px;
+  text-align: center;
+  color: silver;
+  margin-bottom: 5px;
+`;
+
+const InfoPara = styled.p`
+  color:silver;
+  font-size: 15px;
+  text-align: center;
 `;
 
 export { MainContent };

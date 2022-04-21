@@ -50,7 +50,7 @@ const App = () => {
         postID: data.id
       })
     } catch( error ) {
-      console.log( 'error in adding comment' );
+      console.error( 'error in adding comment' );
     }
   };
 
