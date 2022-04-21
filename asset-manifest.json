@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/readTHAT/static/css/main.e9c3cbf2.css",
-    "main.js": "/readTHAT/static/js/main.9949b8e6.js",
-    "static/media/smileyLogo.webp": "/readTHAT/static/media/smileyLogo.f8a918915bba70ef6c07.webp",
-    "index.html": "/readTHAT/index.html",
-    "main.e9c3cbf2.css.map": "/readTHAT/static/css/main.e9c3cbf2.css.map",
-    "main.9949b8e6.js.map": "/readTHAT/static/js/main.9949b8e6.js.map"
+    "main.css": "/reddit-clone/static/css/main.e9c3cbf2.css",
+    "main.js": "/reddit-clone/static/js/main.95c7b084.js",
+    "static/media/smileyLogo.webp": "/reddit-clone/static/media/smileyLogo.f8a918915bba70ef6c07.webp",
+    "index.html": "/reddit-clone/index.html",
+    "main.e9c3cbf2.css.map": "/reddit-clone/static/css/main.e9c3cbf2.css.map",
+    "main.95c7b084.js.map": "/reddit-clone/static/js/main.95c7b084.js.map"
   },
   "entrypoints": [
     "static/css/main.e9c3cbf2.css",
-    "static/js/main.9949b8e6.js"
+    "static/js/main.95c7b084.js"
   ]
 }
