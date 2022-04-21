@@ -30,7 +30,7 @@ const NavBar = ( props ) => {
 
   return (
     <Container>
-      <LogoContainer onClick={ () => { navigate( '/readTHAT' ) } } >
+      <LogoContainer onClick={ () => { navigate( '/reddit-clone' ) } } >
         <Logo src={ logo.icon } alt={ logo.name }/>
         <Header>readTHAT</Header>
       </LogoContainer>

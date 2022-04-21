@@ -22,7 +22,7 @@ const CreatePost = ( props ) => {
     e.preventDefault();
 
     if( title === '' && content === '' ) {
-      navigate( '/readTHAT' );
+      navigate( '/reddit-clone' );
     }
 
     addPost( title, content );
@@ -30,7 +30,7 @@ const CreatePost = ( props ) => {
     setTitle('');
     setContent('');
     getPosts();
-    navigate( '/readTHAT' );
+    navigate( '/reddit-clone' );
   };
 
   return (

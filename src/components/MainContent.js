@@ -56,15 +56,15 @@ const MainContent = ( props ) => {
     <MainContainer>
       <ContenContainer>
         <Routes>
-          <Route path='/readTHAT' element={ <InitialContent
+          <Route path='/reddit-clone' element={ <InitialContent
           user={ user }
           postsArray={ postsArray }
           postUpvote={ postUpvote }
           postDownvote={ postDownvote }
           commentsArray={ commentsArray }/> } />
-          <Route path='/readTHAT/submit' element={ <CreatePost addPost={ addPost } getPosts={ getPosts } /> } />
+          <Route path='/reddit-clone/submit' element={ <CreatePost addPost={ addPost } getPosts={ getPosts } /> } />
           { postsArray.map(( data ) => {
-            return <Route key={ data.id } path={ `/readTHAT/comments/${ data.id }` }  element={ <FullPost
+            return <Route key={ data.id } path={ `/reddit-clone/comments/${ data.id }` }  element={ <FullPost
               data={ data }
               user={ user }
               postUpvote={ postUpvote }

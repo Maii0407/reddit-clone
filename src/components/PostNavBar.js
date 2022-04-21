@@ -11,8 +11,8 @@ const PostNav = () => {
   return (
     <Container>
       <ProfilePic src={ logo } alt='pic' />
-      <TextArea type='text' placeholder='Create Post' onClick={ () => { navigate( '/readTHAT/submit' ) } } />
-      <PlusBtn onClick={ () => { navigate( '/submit' ) } }>+</PlusBtn>
+      <TextArea type='text' placeholder='Create Post' onClick={ () => { navigate( '/reddit-clone/submit' ) } } />
+      <PlusBtn onClick={ () => { navigate( '/reddit-clone/submit' ) } }>+</PlusBtn>
     </Container>
   );
 };
